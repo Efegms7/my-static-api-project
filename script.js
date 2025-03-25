@@ -1,9 +1,18 @@
+document.getElementById('fetchImage').addEventListener('click', fetchImage);
 
-function fetchDog() {
-    fetch("https://dog.ceo/api/breeds/image/random")
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("dogImage").src = data.message;
-    })
-    .catch(error => console.log("Hata:", error));
+async function fetchImage() {
+    const url = 'https://picsum.photos/600/400?random';  // Lorem Picsum API URL
+    
+    try {
+        const response = await fetch(url);
+        const imageUrl = response.url;  // API tarafından sağlanan rastgele görselin URL'si
+        
+        const imgElement = document.createElement('img');
+        imgElement.src = imageUrl;
+        document.getElementById('imageContainer').innerHTML = ''; // Eski görseli temizle
+        document.getElementById('imageContainer').appendChild(imgElement);
+    } catch (error) {
+        console.error('Error fetching image:', error);
+    }
 }
+
